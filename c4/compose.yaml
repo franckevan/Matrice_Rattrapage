@@ -1,0 +1,51 @@
+name: matrice-c4
+
+services:
+  db:
+    image: postgres:16.4-alpine          # version figée, pas de :latest
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-matrice}
+      POSTGRES_DB: ${POSTGRES_DB:-matrice}
+      POSTGRES_PASSWORD_FILE: /run/secrets/db_password   # le mot de passe n'est pas une variable
+    secrets: [db_password]
+    volumes:
+      - pgdata:/var/lib/postgresql/data                  # persistance
+      - ./db/init:/docker-entrypoint-initdb.d:ro         # schéma créé au 1er démarrage seulement
+    networks: [backend]                                  # aucun port publié : base injoignable depuis l'hôte
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 10s
+
+  app:
+    build: .
+    restart: unless-stopped
+    environment:
+      DB_HOST: db                                        # DNS du service
+      DB_NAME: ${POSTGRES_DB:-matrice}
+      DB_USER: ${POSTGRES_USER:-matrice}
+      DB_PASSWORD_FILE: /run/secrets/db_password
+    secrets: [db_password]
+    ports:
+      - "127.0.0.1:${APP_PORT:-8000}:8000"               # exposé en local uniquement
+    networks: [backend]
+    depends_on:
+      db:
+        condition: service_healthy                       # attend la disponibilité, pas juste le démarrage
+    read_only: true
+    tmpfs: [/tmp]
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+
+secrets:
+  db_password:
+    file: ./secrets/db_password.txt                      # fichier local, ignoré par Git
+
+volumes:
+  pgdata:
+
+networks:
+  backend:
