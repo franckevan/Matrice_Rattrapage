@@ -1,0 +1,1 @@
+git check-ignore -v .env secrets/db_password.txt
