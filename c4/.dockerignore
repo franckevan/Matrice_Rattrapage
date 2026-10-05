@@ -1,0 +1,8 @@
+.env
+secrets/
+preuves/
+scripts/
+db/
+.git
+__pycache__/
+.venv/
