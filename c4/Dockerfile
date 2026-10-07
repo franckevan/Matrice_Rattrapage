@@ -2,7 +2,6 @@ FROM python:3.12.7-slim
 
 ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1
 
-# Utilisateur non privilégié (uid fixe, pas de shell, pas de home)
 RUN groupadd --system --gid 10001 app \
  && useradd --system --uid 10001 --gid app --no-create-home --shell /usr/sbin/nologin app
 
@@ -14,9 +13,7 @@ COPY app/ ./app/
 USER 10001:10001
 EXPOSE 8000
 
-# Healthcheck sans curl (absent de l'image slim) : on utilise Python
 HEALTHCHECK --interval=10s --timeout=3s --start-period=5s --retries=3 \
   CMD python -c "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=2).status == 200 else 1)"
 
-# Aucun secret ici : ni ENV, ni ARG, ni COPY de .env
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]

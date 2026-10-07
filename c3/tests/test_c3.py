@@ -61,7 +61,7 @@ class RegleSignature(unittest.TestCase):
 
     def test_une_seule_alerte_par_rafale(self):
         lines = [sig(f"10:00:0{i}", f"e{i}") for i in range(6)]
-        self.assertEqual(rules(lines), ["WEBHOOK_SIGNATURE_BURST", "WEBHOOK_SIGNATURE_BURST"])  # 6 = 2 x 3
+        self.assertEqual(rules(lines), ["WEBHOOK_SIGNATURE_BURST", "WEBHOOK_SIGNATURE_BURST"])
 
     def test_cas_vide(self):
         self.assertEqual(evaluate([]), [])

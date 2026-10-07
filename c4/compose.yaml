@@ -2,17 +2,17 @@ name: matrice-c4
 
 services:
   db:
-    image: postgres:16.4-alpine          # version figée, pas de :latest
+    image: postgres:16.4-alpine
     restart: unless-stopped
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-matrice}
       POSTGRES_DB: ${POSTGRES_DB:-matrice}
-      POSTGRES_PASSWORD_FILE: /run/secrets/db_password   # le mot de passe n'est pas une variable
+      POSTGRES_PASSWORD_FILE: /run/secrets/db_password
     secrets: [db_password]
     volumes:
-      - pgdata:/var/lib/postgresql/data                  # persistance
-      - ./db/init:/docker-entrypoint-initdb.d:ro         # schéma créé au 1er démarrage seulement
-    networks: [backend]                                  # aucun port publié : base injoignable depuis l'hôte
+      - pgdata:/var/lib/postgresql/data
+      - ./db/init:/docker-entrypoint-initdb.d:ro
+    networks: [backend]
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
       interval: 5s
@@ -24,17 +24,17 @@ services:
     build: .
     restart: unless-stopped
     environment:
-      DB_HOST: db                                        # DNS du service
+      DB_HOST: db
       DB_NAME: ${POSTGRES_DB:-matrice}
       DB_USER: ${POSTGRES_USER:-matrice}
       DB_PASSWORD_FILE: /run/secrets/db_password
     secrets: [db_password]
     ports:
-      - "127.0.0.1:${APP_PORT:-8000}:8000"               # exposé en local uniquement
+      - "127.0.0.1:${APP_PORT:-8000}:8000"
     networks: [backend]
     depends_on:
       db:
-        condition: service_healthy                       # attend la disponibilité, pas juste le démarrage
+        condition: service_healthy
     read_only: true
     tmpfs: [/tmp]
     cap_drop: [ALL]
@@ -42,7 +42,7 @@ services:
 
 secrets:
   db_password:
-    file: ./secrets/db_password.txt                      # fichier local, ignoré par Git
+    file: ./secrets/db_password.txt
 
 volumes:
   pgdata:

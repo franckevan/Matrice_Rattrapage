@@ -8,7 +8,6 @@ app = FastAPI(title="C4 micro-app")
 
 
 def _password():
-    # Le secret est lu depuis un fichier monté (compose secrets), jamais depuis l'image.
     path = os.getenv("DB_PASSWORD_FILE")
     if path:
         with open(path, encoding="utf-8") as f:
@@ -18,7 +17,7 @@ def _password():
 
 def _conn_params():
     return {
-        "host": os.getenv("DB_HOST", "db"),  # nom du service Compose = DNS interne
+        "host": os.getenv("DB_HOST", "db"),
         "port": int(os.getenv("DB_PORT", "5432")),
         "dbname": os.getenv("DB_NAME", "matrice"),
         "user": os.getenv("DB_USER", "matrice"),

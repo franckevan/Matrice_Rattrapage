@@ -10,9 +10,8 @@ from .redact import mask_secrets
 _KV = re.compile(r'(\w+)=("[^"]*"|\S+)')
 _TS = re.compile(r"^(\d{2}):(\d{2}):(\d{2})\s")
 
-# --- Paramètres de la règle principale (documentés dans DOSSIER.md) ---
-SIG_THRESHOLD = 3   # nombre d'échecs de signature ...
-SIG_WINDOW_S = 60   # ... dans cette fenêtre glissante (secondes), par source
+SIG_THRESHOLD = 3
+SIG_WINDOW_S = 60
 
 
 def parse_line(line):
@@ -42,7 +41,7 @@ def rule_signature_burst(events, threshold=SIG_THRESHOLD, window_s=SIG_WINDOW_S)
         source = e.get("source", "inconnue")
         q = recent[source]
         q.append(e)
-        while q and e["t"] - q[0]["t"] > window_s:  # on retire ce qui sort de la fenêtre
+        while q and e["t"] - q[0]["t"] > window_s:
             q.popleft()
         if len(q) >= threshold:
             alerts.append({"rule": "WEBHOOK_SIGNATURE_BURST", "severity": "high",
@@ -80,7 +79,7 @@ def rule_ai_review(events):
 
 def evaluate(lines):
     events = [e for e in map(parse_line, lines) if e]
-    events.sort(key=lambda e: e["t"])  # tri stable : l'ordre d'arrivée départage les égalités
+    events.sort(key=lambda e: e["t"])
     alerts = (rule_signature_burst(events) + rule_delivery_quarantine(events)
               + rule_ai_review(events))
     return sorted(alerts, key=lambda a: a["time"])

@@ -1,7 +1,6 @@
 """Journalisation sans secret : liste blanche d'en-têtes + masquage défensif du texte libre."""
 import re
 
-# Liste BLANCHE : tout en-tête absent de cette liste n'est jamais journalisé.
 ALLOWED_HEADERS = {"user-agent", "content-type", "content-length", "x-request-id", "accept"}
 
 _BEARER = re.compile(r"(?i)\b(bearer|basic)\s+[A-Za-z0-9._~+/=-]+")
