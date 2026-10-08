@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MATRiCE — Dashboard des séances</title>
+<style>
+:root{--bg:#fff;--fg:#1f1b2e;--accent:#5b46a8;--card:#f4f2fb}
+@media (prefers-color-scheme:dark){:root{--bg:#16131f;--fg:#ece9f7;--accent:#9d8cf0;--card:#221e33}}
+body{font-family:system-ui,sans-serif;background:var(--bg);color:var(--fg);max-width:960px;margin:2rem auto;padding:0 1rem}
+h1,h2{color:var(--accent)} .kpis{display:flex;gap:.75rem;flex-wrap:wrap}
+.kpi{background:var(--card);border-radius:10px;padding:.8rem 1.1rem;display:flex;flex-direction:column}
+.kpi b{font-size:1.5rem} .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(380px,1fr));gap:1.5rem}
+svg{width:100%} rect{fill:var(--accent)} text{fill:var(--fg);font-size:13px}
+table{border-collapse:collapse;width:100%;font-size:.9rem;display:block;overflow-x:auto}
+td,th{border:1px solid var(--card);padding:.35rem .6rem;text-align:left} .empty{opacity:.7}
+</style></head><body>
+<h1>Dashboard des séances</h1>
+<div class="kpis"><div class="kpi"><b>12</b><span>Lignes lues</span></div><div class="kpi"><b>6</b><span>Acceptées</span></div><div class="kpi"><b>4</b><span>Rejets</span></div><div class="kpi"><b>2</b><span>Doublons</span></div><div class="kpi"><b>60 %</b><span>Taux de confirmation</span></div></div>
+<div class="grid">
+<section><h2>Séances par domaine</h2><svg viewBox="0 0 460 146" role="img" aria-label="Séances par domaine"><text x="0" y="22" class="lbl">cyber</text><rect x="110" y="5" width="135.0" height="22" rx="4"/><text x="251.0" y="22" class="val">1</text><text x="0" y="56" class="lbl">data</text><rect x="110" y="39" width="135.0" height="22" rx="4"/><text x="251.0" y="56" class="val">1</text><text x="0" y="90" class="lbl">projet</text><rect x="110" y="73" width="270.0" height="22" rx="4"/><text x="386.0" y="90" class="val">2</text><text x="0" y="124" class="lbl">web</text><rect x="110" y="107" width="270.0" height="22" rx="4"/><text x="386.0" y="124" class="val">2</text></svg></section>
+<section><h2>Heures par formateur</h2><svg viewBox="0 0 460 112" role="img" aria-label="Heures par formateur"><text x="0" y="22" class="lbl">t1</text><rect x="110" y="5" width="270.0" height="22" rx="4"/><text x="386.0" y="22" class="val">7 h</text><text x="0" y="56" class="lbl">t2</text><rect x="110" y="39" width="270.0" height="22" rx="4"/><text x="386.0" y="56" class="val">7 h</text><text x="0" y="90" class="lbl">t3</text><rect x="110" y="73" width="135.0" height="22" rx="4"/><text x="251.0" y="90" class="val">3,5 h</text></svg></section>
+<section><h2>Heures-apprenant par groupe</h2><svg viewBox="0 0 460 78" role="img" aria-label="Heures-apprenant"><text x="0" y="22" class="lbl">A</text><rect x="110" y="5" width="270.0" height="22" rx="4"/><text x="386.0" y="22" class="val">14 h</text><text x="0" y="56" class="lbl">B</text><rect x="110" y="39" width="270.0" height="22" rx="4"/><text x="386.0" y="56" class="val">14 h</text></svg></section>
+<section><h2>Confirmation</h2><p>3 confirmée(s) sur 5 affectée(s) hors AUTO : <b>60 %</b></p></section>
+</div>
+<h2>Lignes rejetées</h2>
+<table><tr><th>Ligne</th><th>Contenu</th><th>Motif</th></tr><tr><td>7</td><td><code>{&quot;id&quot;: &quot;bad1&quot;, &quot;date&quot;: &quot;2026-10-20&quot;, &quot;period&quot;: &quot;pm&quot;, &quot;group&quot;: &quot;Promotion&quot;, &quot;mode&quot;: &quot;AUTO&quot;, &quot;title&quot;: &quot;&quot;, &quot;domain&quot;: &quot;projet&quot;, &quot;teacherId&quot;: null, &quot;status&quot;: &quot;proposed&quot;}</code></td><td>title vide ou absent</td></tr><tr><td>8</td><td><code>{&quot;id&quot;: &quot;bad2&quot;, &quot;date&quot;: &quot;2026-02-30&quot;, &quot;period&quot;: &quot;am&quot;, &quot;group&quot;: &quot;A&quot;, &quot;mode&quot;: &quot;DG&quot;, &quot;title&quot;: &quot;Date invalide&quot;, &quot;domain&quot;: &quot;web&quot;, &quot;teacherId&quot;: &quot;t1&quot;, &quot;status&quot;: &quot;proposed&quot;}</code></td><td>date inexistante : &#x27;2026-02-30&#x27;</td></tr><tr><td>9</td><td><code>{&quot;id&quot;: &quot;bad3&quot;, &quot;date&quot;: &quot;2026-10-20&quot;, &quot;period&quot;: &quot;soir&quot;, &quot;group&quot;: &quot;A&quot;, &quot;mode&quot;: &quot;DG&quot;, &quot;title&quot;: &quot;Période invalide&quot;, &quot;domain&quot;: &quot;web&quot;, &quot;teacherId&quot;: &quot;t1&quot;, &quot;status&quot;: &quot;proposed&quot;}</code></td><td>period invalide : &#x27;soir&#x27;</td></tr><tr><td>12</td><td><code>{&quot;id&quot;:&quot;bad4&quot;,&quot;title&quot;:&quot;JSON tronqué&quot;</code></td><td>JSON malformé : Expecting &#x27;,&#x27; delimiter</td></tr></table>
+<h2>Doublons ignorés</h2>
+<table><tr><th>Ligne</th><th>id</th><th>1re occurrence (ligne)</th></tr><tr><td>4</td><td>s01</td><td>1</td></tr><tr><td>10</td><td>s02</td><td>2</td></tr></table>
+</body></html>

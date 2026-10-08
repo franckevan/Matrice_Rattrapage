@@ -1,0 +1,26 @@
+{
+  "lines_total": 12,
+  "accepted": 6,
+  "rejected": 4,
+  "duplicates": 2,
+  "sessions_by_domain": {
+    "cyber": 1,
+    "data": 1,
+    "projet": 2,
+    "web": 2
+  },
+  "teacher_hours": {
+    "t1": 7.0,
+    "t2": 7.0,
+    "t3": 3.5
+  },
+  "learner_hours": {
+    "A": 14.0,
+    "B": 14.0
+  },
+  "confirmation": {
+    "confirmed": 3,
+    "assigned": 5,
+    "rate": 0.6
+  }
+}

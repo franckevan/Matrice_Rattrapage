@@ -1,0 +1,30 @@
+[
+  {
+    "line": 7,
+    "raw": "{\"id\": \"bad1\", \"date\": \"2026-10-20\", \"period\": \"pm\", \"group\": \"Promotion\", \"mode\": \"AUTO\", \"title\": \"\", \"domain\": \"projet\", \"teacherId\": null, \"status\": \"proposed\"}",
+    "reasons": [
+      "title vide ou absent"
+    ]
+  },
+  {
+    "line": 8,
+    "raw": "{\"id\": \"bad2\", \"date\": \"2026-02-30\", \"period\": \"am\", \"group\": \"A\", \"mode\": \"DG\", \"title\": \"Date invalide\", \"domain\": \"web\", \"teacherId\": \"t1\", \"status\": \"proposed\"}",
+    "reasons": [
+      "date inexistante : '2026-02-30'"
+    ]
+  },
+  {
+    "line": 9,
+    "raw": "{\"id\": \"bad3\", \"date\": \"2026-10-20\", \"period\": \"soir\", \"group\": \"A\", \"mode\": \"DG\", \"title\": \"Période invalide\", \"domain\": \"web\", \"teacherId\": \"t1\", \"status\": \"proposed\"}",
+    "reasons": [
+      "period invalide : 'soir'"
+    ]
+  },
+  {
+    "line": 12,
+    "raw": "{\"id\":\"bad4\",\"title\":\"JSON tronqué\"",
+    "reasons": [
+      "JSON malformé : Expecting ',' delimiter"
+    ]
+  }
+]
